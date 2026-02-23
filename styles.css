@@ -201,3 +201,165 @@ body {
   .deck { width: 100%; }
   .ctrl { width: 56px; height: 56px; font-size: 24px; }
 }
+
+/* ─── Card stacking z-index ─── */
+.card:nth-child(1) { z-index: 3; }
+.card:nth-child(2) { z-index: 2; }
+.card:nth-child(3) { z-index: 1; }
+
+.card { cursor: grab; user-select: none; }
+
+/* ─── Exit animations ─── */
+.card--exit-right {
+  transform: translateX(150%) rotate(30deg) !important;
+  opacity: 0 !important;
+  transition: transform 400ms ease, opacity 400ms ease !important;
+}
+.card--exit-left {
+  transform: translateX(-150%) rotate(-30deg) !important;
+  opacity: 0 !important;
+  transition: transform 400ms ease, opacity 400ms ease !important;
+}
+.card--exit-up {
+  transform: translateY(-130%) scale(1.05) !important;
+  opacity: 0 !important;
+  transition: transform 400ms ease, opacity 400ms ease !important;
+}
+
+/* ─── Dragging state ─── */
+.card--dragging {
+  transition: none !important;
+  cursor: grabbing;
+}
+
+/* ─── Swipe stamp overlays ─── */
+.card__stamp {
+  position: absolute;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  border: 4px solid;
+  border-radius: 8px;
+  padding: 4px 14px;
+  opacity: 0;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 10;
+}
+.card__stamp--like {
+  top: 28px;
+  left: 24px;
+  color: var(--like);
+  border-color: var(--like);
+  transform: rotate(-15deg);
+}
+.card__stamp--nope {
+  top: 28px;
+  right: 24px;
+  color: var(--nope);
+  border-color: var(--nope);
+  transform: rotate(15deg);
+}
+.card__stamp--super {
+  bottom: 38%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  color: var(--super);
+  border-color: var(--super);
+}
+
+/* ─── Bio overlay (tap to reveal) ─── */
+.card__bio {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.5) 55%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  border-radius: var(--radius);
+}
+.card--bio-open .card__bio {
+  opacity: 1;
+  pointer-events: auto;
+}
+.card__bio-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #f0f0f0;
+}
+
+/* ─── Image error placeholder ─── */
+.card__media--error {
+  background: #222436
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='none'%3E%3Cpath d='M32 20a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm0 20a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-20 8c0-8.837 8.954-16 20-16s20 7.163 20 16H12z' fill='%238b8ca1'/%3E%3C/svg%3E")
+    center / 64px no-repeat;
+}
+
+/* ─── Empty deck state ─── */
+.deck__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--muted);
+  font-size: 16px;
+  text-align: center;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.deck__empty-icon { font-size: 52px; }
+.deck__empty p { margin: 0; }
+
+/* ─── Photo progress dots ─── */
+.card__dots {
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  z-index: 5;
+  pointer-events: none;
+}
+.card__dot {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background 200ms ease;
+}
+.card__dot--active {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* ─── Photo crossfade ─── */
+.card__media {
+  transition: opacity 150ms ease;
+}
+.card__media--fading {
+  opacity: 0;
+}
+
+/* ─── Disabled / feedback states ─── */
+.ghost-btn:disabled,
+.ctrl:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.ctrl:active:not(:disabled) {
+  transform: scale(0.9);
+  transition: transform 80ms;
+}
