@@ -121,6 +121,7 @@ body {
   object-fit: cover;
   display: block;
   background: #222436;
+  transition: opacity 150ms ease;
 }
 
 .card__body {
@@ -346,9 +347,6 @@ body {
 }
 
 /* ─── Photo crossfade ─── */
-.card__media {
-  transition: opacity 150ms ease;
-}
 .card__media--fading {
   opacity: 0;
 }
